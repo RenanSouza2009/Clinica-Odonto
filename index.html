@@ -370,11 +370,11 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Direcionar para a Home ao carregar o site
-        window.addEventListener('DOMContentLoaded', () => {
-            if (!window.location.hash) {
-                window.location.hash = 'home';
-            }
+        // Forçar o site a iniciar no topo absoluto ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 10);
         });
     </script>
 </body>
