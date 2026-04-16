@@ -178,19 +178,45 @@
 
         /* --- Responsividade --- */
         @media (max-width: 1024px) {
-            header { top: 20px; padding: 10px 20px; }
+            header { top: 20px; padding: 10px 20px; width: 95%; }
             .nav-links { display: none; }
-            .hero-container, .proc-grid, .contact-container { grid-template-columns: 1fr; }
+            .hero-container, .proc-grid, .contact-container { grid-template-columns: 1fr; gap: 40px; }
             .hero-text { text-align: center; }
-            .hero-text h1 { font-size: 4rem; letter-spacing: -2px; }
+            .hero-text h1 { font-size: clamp(2.5rem, 10vw, 4rem); letter-spacing: -2px; }
             .contact-container { padding: 40px; border-radius: 40px; margin-top: 0; }
             .hero-img { border-radius: 30px; }
+            
+            /* Ajuste dos botões bugados no mobile */
+            .hero-text .btn-hero {
+                padding: 20px 30px !important;
+                font-size: 0.9rem !important;
+                width: 100%;
+                max-width: 400px;
+                display: inline-block;
+            }
+            .contact-text .btn-contact {
+                padding: 20px !important;
+                font-size: 0.9rem !important;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 10px 15px; }
+            .logo { font-size: 0.9rem; white-space: nowrap; }
+            .btn-cta-header { padding: 8px 12px; font-size: 0.65rem; }
+            .m-bar { font-size: 8px; letter-spacing: 2px; padding: 10px 5px; }
+            .wa-float { width: 60px; height: 60px; font-size: 1.8rem; bottom: 20px; right: 20px; border-radius: 20px; }
+            .sec-title { font-size: 2.2rem; }
+            .hero-text p { font-size: 1.1rem; }
+            .hero-container { padding-top: 50px; }
+            #home { padding-top: 150px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="m-bar">Atendimento especializado e tecnologia de ponta</div>
+    <div class="m-bar">Site em periodo de teste e manutencao</div>
 
     <header id="navbar">
         <a href="#" class="logo">Dra Gabi Fontinelle</a>
@@ -214,7 +240,7 @@
                 <span class="tag">Saúde Bucal Avançada</span>
                 <h1>Seu Sorriso em boas <span>Mãos.</span></h1>
                 <p>Excelência técnica e atendimento humanizado. Utilizamos tecnologia de última geração para garantir precisão e conforto em cada etapa do seu tratamento.</p>
-                <a href="https://wa.me/5521980144902" class="btn-cta-header" style="padding: 25px 50px; font-size: 1rem; border-radius: 20px;">QUERO AGENDAR MINHA AVALIAÇÃO</a>
+                <a href="https://wa.me/5521980144902" class="btn-cta-header btn-hero" style="padding: 25px 50px; font-size: 1rem; border-radius: 20px;">QUERO AGENDAR MINHA AVALIAÇÃO</a>
             </div>
             <div class="hero-image-wrapper">
                 <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1000&q=80" alt="Consultório Odontológico Moderno" class="hero-img">
@@ -311,7 +337,7 @@
                     <i class="fas fa-clock"></i>
                     <div><h4>Horário de Atendimento</h4><p>Segunda a Sexta: 08h - 18h | Sáb: 08h - 12h</p></div>
                 </div>
-                <a href="https://wa.me/5521980144902" class="btn-cta-header" style="display: block; text-align: center; padding: 25px; font-size: 1rem; border-radius: 20px;">SOLICITAR AGENDAMENTO AGORA</a>
+                <a href="https://wa.me/5521980144902" class="btn-cta-header btn-contact" style="display: block; text-align: center; padding: 25px; font-size: 1rem; border-radius: 20px;">SOLICITAR AGENDAMENTO AGORA</a>
             </div>
             <div class="map-wrapper">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.697092404068!2d-43.3235688!3d-23.0012217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bd0a394982635%3A0xc3f8e4e7e6f3b06!2sAv.%20das%20Am%C3%A9ricas%2C%201000%20-%20Barra%20da%20Tijuca%2C%20Rio%20de%20Janeiro%20-%20RJ!5e0!3m2!1spt-BR!2sbr!4v1713280000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -343,6 +369,13 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Direcionar para a Home ao carregar o site
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!window.location.hash) {
+                window.location.hash = 'home';
+            }
+        });
     </script>
 </body>
 </html>
