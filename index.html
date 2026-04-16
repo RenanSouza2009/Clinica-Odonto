@@ -15,15 +15,16 @@
             --primary-dark: #003d99;
             --secondary: #00b4d8;
             --accent: #25d366;
+            --warning: #f59e0b;
             --text-main: #1e293b;
             --text-muted: #64748b;
             --bg-light: #f8faff;
             --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.8);
+            --glass: rgba(255, 255, 255, 0.85);
             --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -40,6 +41,25 @@
             overflow-x: hidden;
         }
 
+        /* --- Maintenance Banner --- */
+        .maintenance-banner {
+            background: var(--warning);
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
         /* --- Custom Scrollbar --- */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-light); }
@@ -47,8 +67,14 @@
 
         /* --- Animations --- */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes pulse {
@@ -59,7 +85,7 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
             transition: var(--transition);
         }
 
@@ -71,18 +97,18 @@
         /* --- Header & Navigation --- */
         header {
             background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.4);
             position: fixed;
             width: 100%;
-            top: 0;
+            top: 40px; /* Space for banner */
             z-index: 1000;
             transition: var(--transition);
         }
 
         .nav-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 1.2rem 2rem;
             display: flex;
@@ -91,13 +117,14 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            letter-spacing: -0.5px;
         }
 
         .nav-menu {
@@ -110,20 +137,22 @@
         .nav-menu a {
             text-decoration: none;
             color: var(--text-main);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             transition: var(--transition);
             position: relative;
+            padding: 5px 0;
         }
 
         .nav-menu a::after {
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
-            bottom: -5px;
+            height: 3px;
+            bottom: -2px;
             left: 0;
-            background-color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
             transition: var(--transition);
         }
 
@@ -132,7 +161,7 @@
 
         .mobile-toggle {
             display: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: var(--primary);
         }
@@ -140,37 +169,59 @@
         /* --- Hero Section --- */
         #home {
             min-height: 100vh;
-            background: radial-gradient(circle at top right, rgba(0, 82, 204, 0.05), transparent),
-                        radial-gradient(circle at bottom left, rgba(0, 180, 216, 0.05), transparent);
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 82, 204, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 180, 216, 0.05) 0%, transparent 40%),
+                var(--bg-light);
             display: flex;
             align-items: center;
-            padding: 120px 2rem 5rem;
+            padding: 160px 2rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative shapes */
+        #home::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.03;
+            top: -100px;
+            right: -100px;
+            z-index: 0;
         }
 
         .hero-grid {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            font-weight: 800;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            line-height: 1.05;
+            font-weight: 900;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #0f172a 0%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero-text p {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
+            margin-bottom: 3rem;
+            max-width: 650px;
+            line-height: 1.6;
         }
 
         .btn-group {
@@ -180,255 +231,390 @@
         }
 
         .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
+            padding: 1.1rem 2.8rem;
+            border-radius: 16px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 800;
             display: inline-flex;
             align-items: center;
             gap: 12px;
             transition: var(--transition);
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
-            box-shadow: 0 10px 20px -5px rgba(0, 82, 204, 0.3);
+            box-shadow: 0 15px 30px -10px rgba(0, 82, 204, 0.4);
         }
 
         .btn-primary:hover {
-            transform: translateY(-5px);
-            background-color: var(--primary-dark);
-            box-shadow: 0 15px 30px -5px rgba(0, 82, 204, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 40px -12px rgba(0, 82, 204, 0.5);
+        }
+
+        .btn-outline {
+            border: 2.5px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 82, 204, 0.05);
+            transform: translateY(-8px);
         }
 
         .hero-image {
             position: relative;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--primary);
+            border-radius: 40px;
+            top: 20px;
+            left: 20px;
+            z-index: -1;
+            opacity: 0.3;
         }
 
         .hero-image img {
             width: 100%;
-            border-radius: 30px;
+            border-radius: 40px;
             box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* --- Stats Section --- */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 3rem;
+        }
+
+        .stat-item h4 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
         }
 
         /* --- Sections --- */
         section {
-            padding: 7rem 2rem;
-            max-width: 1300px;
+            padding: 8rem 2rem;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 6rem;
         }
 
         .section-header span {
             color: var(--primary);
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.85rem;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 1rem;
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-top: 0.5rem;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #0f172a;
         }
 
         /* --- Procedures --- */
         .procedures-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
         }
 
         .procedure-card {
             background: var(--white);
-            padding: 1rem;
-            border-radius: 24px;
-            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            border-radius: 32px;
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.03);
             transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .procedure-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
         }
 
         .procedure-card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            transform: translateY(-20px);
+            box-shadow: 0 30px 60px -15px rgba(0, 82, 204, 0.15);
+            border-color: rgba(0, 82, 204, 0.1);
         }
+
+        .procedure-card:hover::before { opacity: 1; }
 
         .procedure-card img {
             width: 100%;
-            height: 250px;
-            border-radius: 18px;
+            height: 280px;
+            border-radius: 24px;
             object-fit: cover;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .procedure-card h3 {
-            font-size: 1.35rem;
-            padding: 0 1rem 1rem;
-            color: var(--text-main);
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 0 1rem 1.5rem;
+            color: #0f172a;
+            letter-spacing: -0.5px;
         }
 
         /* --- About --- */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: 6rem;
             align-items: center;
         }
 
         .about-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
         }
 
         .about-content p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
+        .feature-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0f172a;
+        }
+
+        .feature-item i { color: var(--accent); font-size: 1.2rem; }
+
         /* --- Reviews --- */
-        #avaliacoes { background-color: #f0f4ff; max-width: 100%; }
+        #avaliacoes { background-color: #f4f7ff; max-width: 100%; position: relative; }
+        #avaliacoes::before {
+            content: '“';
+            position: absolute;
+            font-size: 25rem;
+            color: var(--primary);
+            opacity: 0.03;
+            top: -100px;
+            left: 50px;
+            font-family: serif;
+        }
+
         .reviews-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
         }
 
         .review-card {
             background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 24px;
+            padding: 4rem 3rem;
+            border-radius: 32px;
             position: relative;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.01);
         }
 
         .review-card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            transform: translateY(-20px);
+            box-shadow: 0 40px 80px -20px rgba(0, 82, 204, 0.1);
         }
 
         .review-card i.fa-quote-left {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 3rem;
-            color: rgba(0, 82, 204, 0.05);
+            top: 30px;
+            left: 30px;
+            font-size: 2.5rem;
+            color: rgba(0, 82, 204, 0.08);
         }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        .reviewer-info h4 { font-weight: 800; color: #0f172a; }
 
         /* --- Contact Cards --- */
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
         }
 
         .info-card {
             background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 24px;
+            padding: 4rem 3rem;
+            border-radius: 32px;
             text-align: center;
             transition: var(--transition);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.01);
         }
 
         .info-card:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
             background: var(--primary);
             color: var(--white);
+            box-shadow: 0 30px 60px -10px rgba(0, 82, 204, 0.3);
         }
 
-        .info-card:hover i, .info-card:hover p { color: var(--white); }
+        .info-card:hover i, .info-card:hover p, .info-card:hover h4 { color: var(--white); }
 
         .info-card i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             transition: var(--transition);
         }
 
+        .info-card h4 { font-size: 1.4rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a; transition: var(--transition); }
+        .info-card p { color: var(--text-muted); font-weight: 600; transition: var(--transition); }
+
         .map-wrapper {
-            border-radius: 30px;
+            border-radius: 40px;
             overflow: hidden;
             box-shadow: var(--shadow-lg);
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
+            border: 8px solid var(--white);
         }
 
         /* --- WhatsApp Floating --- */
         .whatsapp-float {
             position: fixed;
-            width: 65px;
-            height: 65px;
-            bottom: 30px;
-            right: 30px;
+            width: 75px;
+            height: 75px;
+            bottom: 40px;
+            right: 40px;
             background-color: var(--accent);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 38px;
             text-decoration: none;
             z-index: 1000;
-            animation: pulse 2s infinite;
+            animation: pulse 2.5s infinite;
             transition: var(--transition);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
         }
 
-        .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
+        .whatsapp-float:hover { transform: scale(1.15) rotate(15deg); }
 
         /* --- Footer --- */
         footer {
-            background: var(--text-main);
+            background: #0f172a;
             color: var(--white);
-            padding: 5rem 2rem 2rem;
+            padding: 7rem 2rem 3rem;
         }
 
         .footer-content {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .footer-socials {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .footer-socials a {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: rgba(255,255,255,0.05);
-            border-radius: 50%;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--white);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             transition: var(--transition);
             text-decoration: none;
         }
 
         .footer-socials a:hover {
             background: var(--primary);
-            transform: translateY(-5px);
+            transform: translateY(-10px) rotate(8deg);
+        }
+
+        .footer-bottom {
+            width: 100%;
+            max-width: 1400px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            font-weight: 500;
         }
 
         /* --- Responsive --- */
@@ -436,31 +622,40 @@
             .hero-grid { grid-template-columns: 1fr; text-align: center; }
             .hero-text p { margin-inline: auto; }
             .btn-group { justify-content: center; }
-            .about-grid { grid-template-columns: 1fr; }
-            .hero-image { order: -1; max-width: 500px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .hero-image { order: -1; max-width: 550px; margin: 0 auto; }
+            .stats-section { grid-template-columns: 1fr; gap: 2.5rem; }
         }
 
         @media (max-width: 768px) {
+            header { top: 40px; }
             .nav-menu {
                 position: fixed;
                 top: 0;
                 right: -100%;
-                width: 80%;
+                width: 85%;
                 height: 100vh;
                 background: var(--white);
                 flex-direction: column;
-                padding-top: 100px;
-                transition: 0.5s;
-                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                padding-top: 120px;
+                transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -20px 0 40px rgba(0,0,0,0.1);
             }
 
             .nav-menu.active { right: 0; }
             .mobile-toggle { display: block; }
-            .section-header h2 { font-size: 2rem; }
+            .section-header h2 { font-size: 2.2rem; }
+            .hero-text h1 { font-size: 3rem; }
+            .whatsapp-float { width: 65px; height: 65px; bottom: 25px; right: 25px; font-size: 32px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Maintenance Banner -->
+    <div class="maintenance-banner">
+        <i class="fas fa-tools"></i> Site em periodo de teste e manutenção
+    </div>
 
     <header>
         <nav class="nav-container">
@@ -489,15 +684,30 @@
     <section id="home">
         <div class="hero-grid">
             <div class="hero-text">
-                <h1>Excelência em cada detalhe do seu sorriso.</h1>
-                <p>Tecnologia avançada e atendimento humanizado para proporcionar a você a melhor experiência odontológica do Rio de Janeiro.</p>
+                <h1>Excelência que redefine seu sorriso.</h1>
+                <p>Onde a tecnologia de ponta encontra o cuidado humano. Oferecemos uma jornada odontológica exclusiva e resultados que impressionam.</p>
                 <div class="btn-group">
                     <a href="https://wa.me/5521980144902" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Agendar Consulta
+                        <i class="fab fa-whatsapp"></i> Agendar Experiência VIP
                     </a>
-                    <a href="#procedimentos" class="btn" style="border: 2px solid var(--primary); color: var(--primary);">
-                        Ver Serviços
+                    <a href="#procedimentos" class="btn btn-outline">
+                        Explorar Serviços
                     </a>
+                </div>
+                
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <h4>10k+</h4>
+                        <p>Sorrisos Transformados</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>15+</h4>
+                        <p>Especialistas Premiados</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>4.9/5</h4>
+                        <p>Satisfação Google</p>
+                    </div>
                 </div>
             </div>
             <div class="hero-image">
@@ -513,11 +723,18 @@
                 <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80" alt="Consultório">
             </div>
             <div class="about-content">
-                <span>Bem-vindo à Sorriso Ideal</span>
-                <h3>Cuidamos do seu sorriso como ele merece.</h3>
-                <p>Nossa missão é devolver a confiança e a alegria através de tratamentos modernos e seguros. Unimos o que há de mais atual na odontologia com um ambiente acolhedor.</p>
-                <p>Com especialistas focados em resultados estéticos e funcionais, garantimos um tratamento personalizado para cada necessidade.</p>
-                <a href="https://wa.me/5521980144902" class="btn btn-primary" target="_blank">Saiba mais sobre nós</a>
+                <span>Conheça a Sorriso Ideal</span>
+                <h3>Mais que uma clínica, um novo conceito em saúde.</h3>
+                <p>Nascemos para elevar o padrão da odontologia. Cada paciente é tratado de forma única, em um ambiente projetado para oferecer o máximo conforto e tranquilidade.</p>
+                
+                <ul class="feature-list">
+                    <li class="feature-item"><i class="fas fa-check-circle"></i> Tecnologia Digital</li>
+                    <li class="feature-item"><i class="fas fa-check-circle"></i> Ambiente Luxury</li>
+                    <li class="feature-item"><i class="fas fa-check-circle"></i> Foco em Estética</li>
+                    <li class="feature-item"><i class="fas fa-check-circle"></i> Atendimento 24h</li>
+                </ul>
+
+                <a href="https://wa.me/5521980144902" class="btn btn-primary" target="_blank">Conheça nossa História</a>
             </div>
         </div>
     </section>
@@ -531,15 +748,15 @@
         <div class="procedures-grid">
             <div class="procedure-card">
                 <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=500&q=80" alt="Clareamento">
-                <h3>Clareamento Dental</h3>
+                <h3>Clareamento a Laser</h3>
             </div>
             <div class="procedure-card">
                 <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=500&q=80" alt="Implantes">
-                <h3>Implantes Dentários</h3>
+                <h3>Implantes de Carga Imediata</h3>
             </div>
             <div class="procedure-card">
                 <img src="https://images.unsplash.com/photo-1468493858157-0da44aaf1d13?auto=format&fit=crop&w=500&q=80" alt="Limpeza">
-                <h3>Limpeza Profissional</h3>
+                <h3>Limpeza Ultrassônica</h3>
             </div>
         </div>
     </section>
@@ -547,33 +764,39 @@
     <!-- Avaliações -->
     <section id="avaliacoes" class="reveal">
         <div class="section-header">
-            <span>Feedback</span>
+            <span>Depoimentos</span>
             <h2>O que dizem nossos pacientes</h2>
         </div>
         <div class="reviews-container">
             <div class="review-card">
                 <i class="fas fa-quote-left"></i>
-                <div style="color: #f1c40f; margin-bottom: 1rem;">
+                <div style="color: var(--warning); margin-bottom: 1.5rem; font-size: 0.9rem;">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-                <p>"Experiência incrível. Nunca me senti tão bem cuidada em um dentista. O resultado superou minhas expectativas!"</p>
-                <h4 style="margin-top: 1.5rem; color: var(--primary);">Mariana Silva</h4>
+                <p>"Uma experiência transformadora. O atendimento VIP me fez esquecer que estava no dentista. Resultado impecável!"</p>
+                <div class="reviewer-info">
+                    <h4 style="color: var(--primary);">Mariana Silva</h4>
+                </div>
             </div>
             <div class="review-card">
                 <i class="fas fa-quote-left"></i>
-                <div style="color: #f1c40f; margin-bottom: 1rem;">
+                <div style="color: var(--warning); margin-bottom: 1.5rem; font-size: 0.9rem;">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-                <p>"Clínica impecável, profissionais de altíssimo nível. Fiz meus implantes e agora volto a sorrir com prazer."</p>
-                <h4 style="margin-top: 1.5rem; color: var(--primary);">Ricardo Souza</h4>
+                <p>"Tecnologia incrível. Meus implantes ficaram perfeitos e a recuperação foi muito rápida. Recomendo a todos."</p>
+                <div class="reviewer-info">
+                    <h4 style="color: var(--primary);">Ricardo Souza</h4>
+                </div>
             </div>
             <div class="review-card">
                 <i class="fas fa-quote-left"></i>
-                <div style="color: #f1c40f; margin-bottom: 1rem;">
+                <div style="color: var(--warning); margin-bottom: 1.5rem; font-size: 0.9rem;">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-                <p>"Equipe muito atenciosa e tecnologia de ponta. Me senti seguro do início ao fim do tratamento."</p>
-                <h4 style="margin-top: 1.5rem; color: var(--primary);">Ana Paula Duarte</h4>
+                <p>"O cuidado com os detalhes é o diferencial. A clínica é linda e o atendimento é o melhor que já recebi."</p>
+                <div class="reviewer-info">
+                    <h4 style="color: var(--primary);">Ana Paula Duarte</h4>
+                </div>
             </div>
         </div>
     </section>
@@ -581,8 +804,8 @@
     <!-- Contato -->
     <section id="contato" class="reveal">
         <div class="section-header">
-            <span>Onde estamos</span>
-            <h2>Agende sua Visita</h2>
+            <span>Visite-nos</span>
+            <h2>Onde a Magia Acontece</h2>
         </div>
         <div class="contact-info">
             <div class="info-card">
@@ -599,28 +822,28 @@
             </div>
             <div class="info-card">
                 <i class="fas fa-phone"></i>
-                <h4>Fale Conosco</h4>
+                <h4>Contatos</h4>
                 <p>(21) 98014-4902</p>
-                <p>contato@sorrisoideal.com</p>
+                <p>vip@sorrisoideal.com</p>
             </div>
         </div>
 
         <div class="map-wrapper">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.868739958043!2d-43.376841!3d-22.788812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDQ3JzE5LjciUyA0M8KwMjInMzYuNiJX!5e0!3m2!1spt-BR!2sbr!4v1712150000000!5m2!1spt-BR!2sbr" 
-                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.868739958043!2d-43.376841!3d-22.788812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDQ3JzE5LjciUyA0M8KwMjInMzKwMzYuNiJX!5e0!3m2!1spt-BR!2sbr!4v1712150000000!5m2!1spt-BR!2sbr" 
+                width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
 
         <div style="text-align: center;">
-            <a href="https://wa.me/5521980144902" class="btn btn-primary" style="padding: 1.5rem 3.5rem; font-size: 1.2rem;">
-                <i class="fab fa-whatsapp"></i> Iniciar Atendimento VIP
+            <a href="https://wa.me/5521980144902" class="btn btn-primary" style="padding: 1.5rem 4rem; font-size: 1.2rem; border-radius: 20px;">
+                <i class="fab fa-whatsapp"></i> Iniciar Jornada Sorriso Ideal
             </a>
         </div>
     </section>
 
     <footer>
         <div class="footer-content">
-            <div class="logo" style="color: white;">
+            <div class="logo" style="color: white; font-size: 2rem;">
                 <i class="fas fa-tooth"></i>
                 <span>SORRISO IDEAL</span>
             </div>
@@ -629,7 +852,9 @@
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://wa.me/5521980144902" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
-            <p>&copy; 2026 Clínica Sorriso Ideal. Criado com excelência.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Clínica Sorriso Ideal. Todos os direitos reservados. Design by Excellence.</p>
+            </div>
         </div>
     </footer>
 
