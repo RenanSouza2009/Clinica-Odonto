@@ -194,17 +194,20 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
+        .stats-container { display: flex; gap: 40px; margin-top: 30px; }
+
         /* --- Responsividade --- */
         @media (max-width: 1024px) {
             header { top: 75px; padding: 10px 15px; width: 92%; border-radius: 30px; }
             .nav-links { display: none; }
             .hero-container, .proc-grid, .contact-container { grid-template-columns: 1fr; gap: 40px; }
-            .hero-text, .contact-text { text-align: center; }
+            .hero-text, .contact-text { text-align: center; display: flex; flex-direction: column; align-items: center; }
             .hero-text h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); letter-spacing: -1px; }
             .hero-text p { margin: 0 auto 45px; }
+            .stats-container { flex-direction: column; gap: 30px; align-items: center; margin-top: 40px !important; }
             .contact-container { padding: 40px 20px; border-radius: 40px; margin-top: 0; }
             .c-item { justify-content: center; flex-direction: column; text-align: center; }
-            .hero-img { border-radius: 30px; max-width: 90%; }
+            .hero-img { border-radius: 30px; max-width: 100%; margin: 0 auto; }
             
             .hero-text .btn-hero, .contact-text .btn-contact {
                 padding: 20px 25px !important;
@@ -288,13 +291,13 @@
     <section id="sobre" class="reveal">
         <div class="hero-container" style="gap: 100px;">
             <div class="hero-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1000&q=80" alt="Equipamentos Odontológicos" class="hero-img" style="border-radius: 100px 30px 100px 30px;">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1000&q=80" alt="Consultório Odontológico Moderno" class="hero-img" style="border-radius: 100px 30px 100px 30px;">
             </div>
             <div class="hero-text">
                 <span class="tag">Cuidado Individualizado</span>
                 <h2 class="sec-title">Compromisso com sua saúde e bem-estar.</h2>
                 <p>Nossa clínica foi projetada para oferecer um ambiente acolhedor e seguro. Do diagnóstico digital à execução detalhada, cada procedimento é focado na durabilidade e na sua satisfação total.</p>
-                <div style="display: flex; gap: 40px; margin-top: 30px;">
+                <div class="stats-container">
                     <div><h4 style="font-size: 2rem; font-weight: 900; color: var(--primary);">100%</h4><p style="font-size: 0.7rem; font-weight: 800; opacity: 0.5;">DIGITAL</p></div>
                     <div><h4 style="font-size: 2rem; font-weight: 900; color: var(--primary);">FOCO</h4><p style="font-size: 0.7rem; font-weight: 800; opacity: 0.5;">NO PACIENTE</p></div>
                     <div><h4 style="font-size: 2rem; font-weight: 900; color: var(--primary);">SEGURA</h4><p style="font-size: 0.7rem; font-weight: 800; opacity: 0.5;">TECNOLOGIA</p></div>
